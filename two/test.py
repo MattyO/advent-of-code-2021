@@ -35,4 +35,18 @@ class MainTest(TestCase):
         self.assertEqual(ending_poisition.horizontal * ending_poisition.depth , 2215080)
 
 
+    def test_commands2(self):
+        with open('data/example.txt') as f:
+            input_commands = f.readlines()
 
+        ending_poisition = main.compute_position2(input_commands)
+        self.assertEqual(ending_poisition , Poisition(15, 60))
+        self.assertEqual(ending_poisition.horizontal * ending_poisition.depth , 900)
+
+    def test_commands2(self):
+        with open('data/puzzle.txt') as f:
+            input_commands = f.readlines()
+
+        ending_poisition = main.compute_position2(input_commands)
+        self.assertEqual(ending_poisition , Poisition(1890, 986622))
+        self.assertEqual(ending_poisition.horizontal * ending_poisition.depth , 1864715580)

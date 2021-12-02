@@ -1,21 +1,68 @@
 from collections import namedtuple
 Poisition = namedtuple('Poisition', ['horizontal', 'depth'])
 
-def compute_position(input_commands):
-    current_position =Poisition(0,0)
 
-    for c in input_commands:
-        command_name, number = c.split()
+class Sub():
+    def __init__(self):
+        self.horizontal = 0
+        self.depth = 0
+        self.aim = 0
+
+    def command(self, command):
+        command_name, number = command.split()
         number = int(number)
 
-        #import pdb; pdb.set_trace()
+        if command_name == 'forward':
+            self.horizontal += number
+        elif command_name == 'down':
+            self.depth +=  number
+        elif command_name == 'up':
+            self.depth -= number
+
+        #elif command_name == 'down':
+        #    self.aim += number
+        #elif command_name == 'up':
+        #    self.aim -= number
+
+    def position(self):
+        return Poisition(self.horizontal, self.depth)
+
+
+class Sub2():
+    def __init__(self):
+        self.horizontal = 0
+        self.depth = 0
+        self.aim = 0
+
+    def command(self, command):
+        command_name, number = command.split()
+        number = int(number)
 
         if command_name == 'forward':
-            current_position = Poisition(current_position.horizontal + number, current_position.depth)
+            self.horizontal += number
+            self.depth += self.aim * number
         elif command_name == 'down':
-            current_position = Poisition(current_position.horizontal, current_position.depth + number)
+            self.aim += number
         elif command_name == 'up':
-            current_position = Poisition(current_position.horizontal, current_position.depth - number)
+            self.aim -= number
+
+    def position(self):
+        return Poisition(self.horizontal, self.depth)
 
 
-    return current_position
+def compute_position2(input_commands):
+    sub = Sub2()
+
+    for c in input_commands:
+        sub.command(c)
+
+    return sub.position()
+
+def compute_position(input_commands):
+    sub = Sub()
+
+    for c in input_commands:
+        sub.command(c)
+
+    return sub.position()
+
