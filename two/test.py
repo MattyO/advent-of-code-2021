@@ -39,14 +39,14 @@ class MainTest(TestCase):
         with open('data/example.txt') as f:
             input_commands = f.readlines()
 
-        ending_poisition = main.compute_position2(input_commands)
+        ending_poisition = main.compute_position(input_commands, v='v2')
         self.assertEqual(ending_poisition , Poisition(15, 60))
         self.assertEqual(ending_poisition.horizontal * ending_poisition.depth , 900)
 
-    def test_commands2(self):
+    def test_commands2_puzzle(self):
         with open('data/puzzle.txt') as f:
             input_commands = f.readlines()
 
-        ending_poisition = main.compute_position2(input_commands)
+        ending_poisition = main.compute_position(input_commands, v='v2')
         self.assertEqual(ending_poisition , Poisition(1890, 986622))
         self.assertEqual(ending_poisition.horizontal * ending_poisition.depth , 1864715580)
