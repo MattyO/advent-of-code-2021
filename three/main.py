@@ -58,11 +58,6 @@ def rating(input_string, funt):
         compare_portion = "".join(number_to_compare[0: l+1])
         input_string = list(filter(lambda s: s.startswith(compare_portion), input_string))
 
-        print('start')
-        print(pc)
-        print(number_to_compare)
-        print(compare_portion)
-
         if len(input_string) <= 1:
             break
 
