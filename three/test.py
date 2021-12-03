@@ -1,4 +1,5 @@
 import unittest
+from collections import Counter
 
 import main
 
@@ -17,12 +18,21 @@ class MainTest(unittest.TestCase):
 
         self.assertEqual(main.most_common(position_counts[0]), '1')
 
+    def test_most_common_defaults_to_one(self):
+        self.assertEqual(main.most_common(Counter('1100')), '1')
+        self.assertEqual(main.most_common(Counter('0011')), '1')
+
     def test_lest_common(self):
         with open("data/example.txt") as f:
             input_strings = [l.strip() for l in f.readlines()]
         position_counts = main.position_counts(input_strings)
 
         self.assertEqual(main.least_common(position_counts[0]), '0')
+
+    def test_lest_common_default_to_0(self):
+        self.assertEqual(main.least_common(Counter('1100')), '0')
+        self.assertEqual(main.least_common(Counter('0011')), '0')
+        self.assertEqual(main.least_common(Counter('011')), '0')
 
     def test_rates(self):
         with open("data/example.txt") as f:
@@ -53,5 +63,31 @@ class MainTest(unittest.TestCase):
 
         gamma, epsilon = main.rates(position_counts)
         gamma, epsilon = map(lambda n: main.to_digit(n), [gamma, epsilon])
-        self.assertEqual(gamma * epsilon, 198)
+        self.assertEqual(gamma * epsilon, 1082324 )
+
+    def test_rating(self):
+        with open("data/example.txt") as f:
+            input_strings = [l.strip() for l in f.readlines()]
+
+        oxygen = main.to_digit(main.rating(input_strings, main.most_common))
+        co2 = main.to_digit(main.rating(input_strings, main.least_common))
+
+        self.assertEqual(oxygen, 23)
+        self.assertEqual(co2, 10)
+
+        self.assertEqual(oxygen * co2, 230)
+
+    def test_rating_puzzle(self):
+        with open("data/puzzle.txt") as f:
+            input_strings = [l.strip() for l in f.readlines()]
+
+        oxygen = main.to_digit(main.rating(input_strings, main.most_common))
+        co2 = main.to_digit(main.rating(input_strings, main.least_common))
+
+        self.assertEqual(oxygen, 486)
+        self.assertEqual(co2, 2784)
+
+        self.assertEqual(oxygen * co2, 230)
+
+
 
