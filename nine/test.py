@@ -46,9 +46,17 @@ class MainTest(unittest.TestCase):
                 for y, line in enumerate(f.readlines())
                     for x, value in enumerate(line.strip())])
 
-        self.assertEqual(sum(board.risk_levels()), 15)
+        self.assertEqual(sum(board.risk_levels()), 631)
 
+    def test_cell_hash(self):
+        test_hash = {}
+        test_hash[Cell(0,0)] = 'value'
+        self.assertEqual(test_hash[Cell(0,0)], 'value')
 
+    def test_board_hash(self):
+        board = Board([Cell(0,0)])
+        self.assertEqual(board[Cell(0,0)], Cell(0,0))
 
-
-
+    def test_board_hash_returns_none_when_no_cell_is_present(self):
+        board = Board([Cell(0,0)])
+        self.assertEqual(board[Cell(0,1)], None)
