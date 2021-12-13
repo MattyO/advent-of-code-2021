@@ -1,3 +1,5 @@
+from functools import reduce
+
 class Board():
     def __init__(self, cells):
         self.cells = cells
@@ -18,6 +20,22 @@ class Board():
 
     def __getitem__(self, key):
         return self._hashed_cells.get(key, None)
+
+    def connected_group(self, cell):
+        def new_neighbors(connected_cells):
+            next_neighbors = reduce(lambda x,y: x+y, [c.neighbors() for c in connected_cells])
+            next_neighbors = filter(lambda c: c not in connected_cells, next_neighbors)
+            return list(filter(lambda c: c.value != 9, next_neighbors))
+
+        connected_cells = [self[cell]]
+
+        while(new_neighbors(connected_cells) != []):
+            connected_cells += new_neighbors(connected_cells)
+
+        return list(set(connected_cells))
+
+    def find_basins(self):
+        return {cell: self.connected_group(cell) for cell in self.low_points() }
 
 
 
